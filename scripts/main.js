@@ -60,20 +60,20 @@ class Quiz {
     const questionNumber = this.currentQuestion;
     this.userAnswers[`question-${questionNumber}`] = e.target.value;
     this.nextBtn.disabled = false;
-
+    const allAnswerItems = this.quizAnswersList.querySelectorAll(
+      ".quiz__answers-item"
+    );
+    allAnswerItems.forEach((item) => item.classList.remove("active"));
     const label = e.target.closest(".quiz__answers-item");
     if (label) {
-      label.style.transform = "scale(1.02)";
-      setTimeout(() => {
-        label.style.transform = "scale(1)";
-      }, 200);
+      label.classList.add("active");
     }
   }
 
   renderQuestion(number) {
     const question = this.quizData[number - 1];
     const totalQuestions = this.quizData.length;
-    const progressPercent = Math.round((number / totalQuestions) * 100);
+    const progressPercent = Math.round((number / totalQuestions) * 100) - 20;
 
     this.quizQuestionTextEl.style.opacity = 0;
     this.quizAnswersList.style.opacity = 0;
@@ -93,10 +93,9 @@ class Quiz {
         const answerItem = document.createElement("li");
         answerItem.className = "quiz__answers-item";
         answerItem.style.opacity = "0";
-        answerItem.style.transform = "translateY(20px)";
         answerItem.style.transition = `opacity 0.3s ease ${
           index * 0.1
-        }s, transform 0.3s ease ${index * 0.1}s`;
+        }s`;
 
         answerItem.innerHTML = `
           <div class="custom-radio">
@@ -117,7 +116,6 @@ class Quiz {
 
         setTimeout(() => {
           answerItem.style.opacity = "1";
-          answerItem.style.transform = "translateY(0)";
         }, 50);
       });
 
@@ -667,75 +665,72 @@ receptionModalBtns.forEach((btn) => {
   btn.addEventListener("click", showReceptionModal);
 });
 
-
 // cookie
 
-const cookieEl = document.querySelector('[data-cookie]')
-const cookieBtn = document.querySelector('[data-cookie-btn]')
+const cookieEl = document.querySelector("[data-cookie]");
+const cookieBtn = document.querySelector("[data-cookie-btn]");
 
-let allowCookie = null
+let allowCookie = null;
 
-if(localStorage.getItem('cookie')){
-  allowCookie = true
-  cookieEl.style.display = 'none'
+if (localStorage.getItem("cookie")) {
+  allowCookie = true;
+  cookieEl.style.display = "none";
 } else {
-  cookieEl.style.display = 'flex'
-  allowCookie = false
+  cookieEl.style.display = "flex";
+  allowCookie = false;
 }
 
-cookieBtn.addEventListener('click', ()=>{
-  localStorage.setItem('cookie', true)
-  allowCookie = true
-  cookieEl.style.display = 'none'
-
-})
-
+cookieBtn.addEventListener("click", () => {
+  localStorage.setItem("cookie", true);
+  allowCookie = true;
+  cookieEl.style.display = "none";
+});
 
 // timer
 
 function initCountdown() {
-    const container = document.querySelector('.hero__calc-sale');
-    if (!container) return;
+  const container = document.querySelector(".hero__calc-sale");
+  if (!container) return;
 
-    const deadlineStr = container.dataset.timerDeadline;
-    const [dateStr, timeStr] = deadlineStr.split(',');
-    const [day, month, year] = dateStr.trim().split('.').map(Number);
-    const [hours, minutes] = timeStr.trim().split(':').map(Number);
+  const deadlineStr = container.dataset.timerDeadline;
+  const [dateStr, timeStr] = deadlineStr.split(",");
+  const [day, month, year] = dateStr.trim().split(".").map(Number);
+  const [hours, minutes] = timeStr.trim().split(":").map(Number);
 
-    const deadline = new Date(year, month - 1, day, hours, minutes, 0);
+  const deadline = new Date(year, month - 1, day, hours, minutes, 0);
 
-    const daysEl = container.querySelector('[data-timer-days]');
-    const hoursEl = container.querySelector('[data-timer-hours]');
-    const minutesEl = container.querySelector('[data-timer-minutes]');
-    const secondsEl = container.querySelector('[data-timer-seconds]');
+  const daysEl = container.querySelector("[data-timer-days]");
+  const hoursEl = container.querySelector("[data-timer-hours]");
+  const minutesEl = container.querySelector("[data-timer-minutes]");
+  const secondsEl = container.querySelector("[data-timer-seconds]");
 
-    function updateTimer() {
-      const now = new Date();
-      const diff = deadline - now;
+  function updateTimer() {
+    const now = new Date();
+    const diff = deadline - now;
 
-      if (diff <= 0) {
-        clearInterval(timerInterval);
-        daysEl.textContent = '00';
-        hoursEl.textContent = '00';
-        minutesEl.textContent = '00';
-        secondsEl.textContent = '00';
-        return;
-      }
-
-      const totalSeconds = Math.floor(diff / 1000);
-      const days = Math.floor(totalSeconds / 86400);
-      const hours = Math.floor((totalSeconds % 86400) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      daysEl.textContent = String(days).padStart(2, '0');
-      hoursEl.textContent = String(hours).padStart(2, '0');
-      minutesEl.textContent = String(minutes).padStart(2, '0');
-      secondsEl.textContent = String(seconds).padStart(2, '0');
+    if (diff <= 0) {
+      clearInterval(timerInterval);
+      daysEl.textContent = "00";
+      hoursEl.textContent = "00";
+      minutesEl.textContent = "00";
+      secondsEl.textContent = "00";
+      return;
     }
 
-    updateTimer();
-    const timerInterval = setInterval(updateTimer, 1000);
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    daysEl.textContent = String(days).padStart(2, "0");
+    hoursEl.textContent = String(hours).padStart(2, "0");
+    minutesEl.textContent = String(minutes).padStart(2, "0");
+    secondsEl.textContent = String(seconds).padStart(2, "0");
   }
 
-  document.addEventListener('DOMContentLoaded', initCountdown);
+  updateTimer();
+  const timerInterval = setInterval(updateTimer, 1000);
+}
+
+document.addEventListener("DOMContentLoaded", initCountdown);

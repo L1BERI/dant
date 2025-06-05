@@ -749,6 +749,9 @@ img {
   display: flex;
   align-items: center;
 }
+.quiz__answers-item.active{
+  border-color: #007bb9;
+}
 .custom-radio {
   display: flex;
   align-items: center;
@@ -1150,6 +1153,7 @@ img {
   position: absolute;
   right: 40px;
   top: -100px;
+  border-radius: 50%;
 }
 @media (max-width: 1322px) {
   .ind__cards-img {
@@ -1330,13 +1334,13 @@ img {
   position: absolute;
   z-index: -1;
   left: 0%;
-  top: 24.8%;
+  top: 26.8%;
 }
 .implant__decor-2 {
   position: absolute;
   z-index: -1;
   right: 0%;
-  top: 26.8%;
+  top: 28.8%;
 }
 
 @media (max-width: 1472px){
@@ -3181,6 +3185,12 @@ img {
 @media (max-width: 512px) {
   .exp__bottom-subtitle::before {
     left: -140%;
+  }
+}
+@media (max-width: 414px) {
+  .exp__bottom-subtitle::before {
+    left: -140%;
+    top: -10%;
   }
 }
 @media (max-width: 375px) {
