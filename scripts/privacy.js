@@ -1,4 +1,4 @@
-function validateForm(name, phone, checkbox) {
+function validateForm(phone, checkbox) {
   if (!name || name.trim() === "") {
     return { isValid: false, message: "Имя не должно быть пустым" };
   }
@@ -50,7 +50,7 @@ callForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const name = callNameInput.value;
   const phone = callPhoneInput.value;
-  const valid = validateForm(name, phone, callCheckbox);
+  const valid = validateForm(phone, callCheckbox);
   const errorEl = document.querySelector("[data-call-error]");
 
   if (!valid.isValid) {

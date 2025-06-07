@@ -923,7 +923,11 @@ img {
     max-width: none;
   }
 }
-
+@media (max-width: 500px){
+  .quiz_left{
+    height: 100%;
+  }
+}
 .smile__adv {
   display: flex;
   gap: 20px;
@@ -1062,6 +1066,8 @@ img {
   padding-top: clamp(25px, 4vw, 75px);
   padding-bottom: clamp(25px, 4vw, 75px);
   position: relative;
+  max-width: 1920px;
+  margin: 0 auto;
 }
 
 .ind__container {
@@ -1909,7 +1915,7 @@ img {
     align-items: center;
   }
   .heal__left-subtitle::before {
-    left: -40%;
+    left: -30%;
     top: -60%;
   }
 }
@@ -2036,9 +2042,10 @@ img {
 
 .prices__cost-values {
   display: flex;
-  padding-left: 50px;
-  gap: 30px;
+  padding-left: 15px;
+  gap: 10px;
   align-items: center;
+  justify-content: space-between;
 }
 @media (max-width: 1300px) {
   .prices__item-title {
@@ -3672,7 +3679,7 @@ img {
   background: rgba(50, 50, 50, 0.5);
   position: fixed;
   inset: 0;
-  z-index: 10;
+  z-index: 150;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3867,4 +3874,8 @@ img {
   font-weight: 700;
   font-size: clamp(9px, 3vw, 15px);
   color: #fff;
+}
+
+.ymaps-2-1-79-gototech {
+    display: none!important;
 }

@@ -10,7 +10,7 @@ $phone = $_POST['phone'] ?? 'Не указано';
 $form_type = $_POST['form_type'] ?? 'unknown';
 $ref = $_SERVER['HTTP_REFERER'] ?? 'не определено';
 
-// Подготовим тело письма
+
 $body = "<h2>Новая заявка с сайта</h2>";
 $body .= "<b>Имя:</b> " . htmlspecialchars($name) . "<br>";
 $body .= "<b>Телефон:</b> " . htmlspecialchars($phone) . "<br>";
@@ -40,7 +40,7 @@ switch ($form_type) {
         break;
 }
 
-// Отправка письма
+
 $mail = new PHPMailer();
 try {
     $mail->isSMTP();

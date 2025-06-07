@@ -73,7 +73,7 @@ class Quiz {
   renderQuestion(number) {
     const question = this.quizData[number - 1];
     const totalQuestions = this.quizData.length;
-    const progressPercent = Math.round((number / totalQuestions) * 100) - 20;
+    const progressPercent = Math.round((number / totalQuestions) * 100);
 
     this.quizQuestionTextEl.style.opacity = 0;
     this.quizAnswersList.style.opacity = 0;
@@ -186,6 +186,13 @@ class Quiz {
     if (this.quizFormWrapper) this.quizFormWrapper.style.display = "flex";
     if (this.quizQuestions) this.quizQuestions.style.display = "none";
     if (this.quizRight) this.quizRight.style.display = "none";
+
+    setTimeout(() => {
+    this.quizFormWrapper.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+  }, 100);
   }
 
   showSuccess() {
@@ -204,7 +211,7 @@ class Quiz {
     const name = nameInput.value;
     const phone = phoneInput.value;
 
-    const valid = validateForm(name, phone, checkbox);
+    const valid = validateForm(phone, checkbox);
 
     if (!valid.isValid) {
       errorEl.style.display = "block";
@@ -288,10 +295,7 @@ document.querySelectorAll("[data-quiz]").forEach((quizElement) => {
   new Quiz(quizElement, quizData);
 });
 
-function validateForm(name, phone, checkbox) {
-  if (!name || name.trim() === "") {
-    return { isValid: false, message: "Имя не должно быть пустым" };
-  }
+function validateForm(phone, checkbox) {
 
   const cleanedPhone = phone.replace(/\D/g, "");
 
@@ -329,7 +333,7 @@ diagForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const name = diagNameInput.value;
   const phone = diagPhoneInput.value;
-  const valid = validateForm(name, phone, diagCheckbox);
+  const valid = validateForm(phone, diagCheckbox);
   const errorEl = document.querySelector("[data-diag-error]");
 
   if (!valid.isValid) {
@@ -371,7 +375,7 @@ callForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const name = callNameInput.value;
   const phone = callPhoneInput.value;
-  const valid = validateForm(name, phone, callCheckbox);
+  const valid = validateForm(phone, callCheckbox);
   const errorEl = document.querySelector("[data-call-error]");
 
   if (!valid.isValid) {
@@ -417,7 +421,7 @@ receptionForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const name = receptionNameInput.value;
   const phone = receptionPhoneInput.value;
-  const valid = validateForm(name, phone, receptionCheckbox);
+  const valid = validateForm(phone, receptionCheckbox);
   const errorEl = document.querySelector("[data-reception-error]");
 
   if (!valid.isValid) {
@@ -426,7 +430,7 @@ receptionForm.addEventListener("submit", (e) => {
     return;
   }
 
-  const payload = new FormData();
+  const payload = new FormData(); 
   payload.append("name", name);
   payload.append("phone", phone);
   payload.append("form_type", "reception");
